@@ -1,0 +1,12 @@
+apiVersion: skaffold/v2beta26
+kind: Config
+metadata:
+name: fleet-platform
+build:
+artifacts:
+- image: us-central1-docker.pkg.dev/$PROJECT_ID/fleet-platform-repo/fleet-api
+context: .
+docker:
+dockerfile: Dockerfile
+deploy:
+kustomize: {}

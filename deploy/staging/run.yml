@@ -1,0 +1,25 @@
+apiVersion: run.googleapis.com/v1
+kind: Service
+metadata:
+name: fleet-api-staging
+annotations:
+autoscaling.knative.dev/minScale: "0"
+spec:
+template:
+metadata:
+annotations:
+client.knative.dev/user-image: ""
+spec:
+containers:
+- image: "${_IMAGE}":
+env:
+- name: DATABASE_URL
+valueFrom:
+secretKeyRef:
+name: projects/$PROJECT_ID/secrets/DB_URL
+key: latest
+resources:
+limits:
+memory: 512Mi
+cpu: 1
+serviceAccountName: cloud-run-invoker@${PROJECT_ID}.iam.gserviceaccount.com
